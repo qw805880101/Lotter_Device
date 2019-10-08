@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.tc.lottery_device"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                /* 极光推送配置 */
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "df0385c93a640066cf5a60e8",
+                JPUSH_CHANNEL: "developer-default",
+        ]
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_TEST_URL", "false"
+            buildConfigField "String", "URL", "\"https://pro.eastcostco.com/front/api/costco/\""
+//            buildConfigField "String", "AGREMMENT_URL", "\"https://pro.eastcostco.com/nacos-order-front/\""
+            buildConfigField "String", "AGREMMENT_URL", "\"https://pro.boocloud.com.cn/nacos-order-front/\""
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_TEST_URL", "true"
+            buildConfigField "String", "URL", "\"http://58.246.136.11:18083/cp-pay/mpi/\""
+            buildConfigField "String", "PRIVATE_KEY", "${project.PRIVATE_KEY}"
+            buildConfigField "String", "AGREMMENT_URL", "\"https://dev.eastcostco.com/nacos-order-front/\""
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    implementation project(path: ':mylibrary')
+
+}

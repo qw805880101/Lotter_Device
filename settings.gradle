@@ -1,0 +1,2 @@
+include ':app', ':mylibrary', ':UpdateAppUtils', ':convenientbanner'
+rootProject.name='Lotter_Device'
